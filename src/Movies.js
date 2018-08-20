@@ -9,7 +9,15 @@ class Movies extends Component {
         {displaySearch && (
           <input type="text" placeholder="Buscar pelicula..." />
         )}
-        <ul>{movies.map(movie => <Movie movie={movie} />)}</ul>
+        <ul>
+          {movies.map(movie => {
+            return (
+              <li key={movie.name}>
+                <Movie movie={movie} />
+              </li>
+            );
+          })}
+        </ul>
       </div>
     );
   }

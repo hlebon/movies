@@ -1,6 +1,7 @@
 import React from "react";
 import Movie from "./Movie";
 import Movies from "./Movies";
+import CreateMovie from "./CreateMovie";
 import ReactDOM from "react-dom";
 
 import "./styles.css";
@@ -33,7 +34,10 @@ function App() {
   return (
     <div className="App">
       <h1>Hello CodeSandbox</h1>
-      <Movies movies={movies} />
+      <div style={{ width: "40%", margin: "auto" }}>
+        <CreateMovie />
+        <Movies movies={movies} />
+      </div>
     </div>
   );
 }

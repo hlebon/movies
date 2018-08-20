@@ -1,5 +1,14 @@
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+* {
+  font-family: "Lato", sans-serif;
+}
+
 .App {
-  font-family: sans-serif;
   text-align: center;
 }
 
@@ -53,7 +62,6 @@ div.movie {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  border-bottom: 1px solid #dadfe1;
   padding-bottom: 0.5em;
   padding-top: 0.5em;
 }
@@ -94,47 +102,56 @@ div.movie-description {
 }
 
 div.movie-info h2 {
+  font-family: "Josefin Sans", sans-serif;
   margin-top: 0.1em;
   margin-bottom: 0.1em;
 }
 
 div.movie-info p {
+  font-size: 18px;
   margin-top: 0.5em;
   margin-bottom: 0.5em;
 }
 
-ul.movie-genres {
+.movies ul {
+  flex-direction: column;
+}
+
+ul {
   display: flex;
   list-style: none;
   padding-left: 0;
   margin-top: 0.3em;
 }
 
-ul.movie-genres li {
+ul li {
   min-width: 50px;
   padding: 0.2em;
   margin: 0.1em;
-  border: 1px solid #d4d4d4;
   border-radius: 4px;
-  font-size: 12px;
+  font-size: 16px;
   text-align: center;
+}
+
+.movie-genres {
   color: #808080;
 }
 
 /*input text*/
 
-input[type="text"] {
+input[type="text"],
+textarea {
   min-width: 300px;
-  height: 30px;
+  min-height: 45px;
   padding: 0.3em 0.7em;
+  margin-bottom: 1em;
   font-size: 18px;
-  border-radius: 10px;
   border: 2px solid #e2e2e2;
 }
 
-input[type="text"]:focus {
+input[type="text"]:focus,
+textarea:focus {
   color: gray;
-  border-radius: 10px;
   border-color: #99c6f3;
   outline: -webkit-focus-ring-color auto 0;
 }
@@ -147,4 +164,31 @@ div.movies {
 
 div.movies input {
   max-width: 500px;
+}
+
+/* form */
+form {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+label {
+  align-self: flex-start;
+  margin-bottom: 0.3em;
+}
+
+.multickebox button {
+  width: 100%;
+  padding: 0.5em;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: white;
+  border: 1px solid #d4d4d4;
+  box-shadow: 1px 2px 3px #d6d3d3;
+}
+
+.multickebox button:hover {
+  border-color: #99c6f3;
+  color: 99c6f3;
 }
