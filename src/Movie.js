@@ -3,7 +3,9 @@ import PropTypes from "prop-types";
 import Checkbox from "./Checkbox";
 
 function Movie({ movie, onCheck }) {
+  console.log("movie", movie);
   const { name, description, genres, status, image } = movie;
+  console.log(movie);
   return (
     <div className="movie">
       <div className="movie-content">
@@ -11,7 +13,7 @@ function Movie({ movie, onCheck }) {
           <img src={image} alt="Batman" />
         </div>
         <div className="movie-info">
-          <h2>{name}</h2>
+          <h3>{name}</h3>
           <p>{description}</p>
           <ul className="movie-genres">
             {genres.map(genre => <li key={genre}>{genre}</li>)}

@@ -30,16 +30,37 @@ const movies = [
   }
 ];
 
-function App() {
-  return (
-    <div className="App">
-      <h1>Hello CodeSandbox</h1>
-      <div style={{ width: "40%", margin: "auto" }}>
-        <CreateMovie />
-        <Movies movies={movies} />
+class App extends React.Component {
+  state = {
+    movies: movies
+  };
+
+  _onSubmit = movie => {
+    const newMovie = {
+      ...movie,
+      genres: movie.categories,
+      status: false,
+      image: "https://i.ebayimg.com/images/g/z54AAOSw7p5ajZmL/s-l300.jpg"
+    };
+    this.setState(currentState => {
+      return {
+        movies: [newMovie, ...currentState.movies]
+      };
+    });
+  };
+
+  render() {
+    return (
+      <div className="App">
+        <h1>Hello CodeSandbox</h1>
+        <div style={{ width: "40%", margin: "auto" }}>
+          <CreateMovie onSubmit={this._onSubmit} />
+          <br />
+          <Movies movies={this.state.movies} />
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
 }
 
 const rootElement = document.getElementById("root");

@@ -17,7 +17,9 @@ class CreateMovie extends React.Component {
 
   _onSubmit = e => {
     e.preventDefault();
-    console.log("submit", this.state);
+    if (this.props.onSubmit) {
+      this.props.onSubmit(this.state);
+    }
   };
   render() {
     const { description, name } = this.state;
