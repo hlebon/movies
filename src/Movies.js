@@ -1,16 +1,9 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import Movie from "./Movie";
+import MultiCheckBox from "./MultiCheckBox";
 
 class Movies extends Component {
-  myRef = React.createRef();
-  componentDidUpdate(prevProps, prevState, snapshot) {
-    if (this.props.movies.length > prevProps.movies.length) {
-      setTimeout(() => {
-        this.myRef.current.classList.add("show");
-      }, 10);
-    }
-  }
   render() {
     const { movies, displaySearch = false } = this.props;
     return (
@@ -19,15 +12,18 @@ class Movies extends Component {
         {displaySearch && (
           <input type="text" placeholder="Buscar pelicula..." />
         )}
-        <ul className="fade swing">
+        <div>
+          <MultiCheckBox className="filterLink" />
+        </div>
+        <ul>
           {movies.map(movie => {
             return (
               <li
-                className="show"
-                id={movie.name}
                 key={movie.name}
-                ref={this.myRef}
-                style={{ backgroundColor: "gray" }}
+                style={{
+                  border: "1px solid gray",
+                  padding: ".5em"
+                }}
               >
                 <Movie movie={movie} />
               </li>

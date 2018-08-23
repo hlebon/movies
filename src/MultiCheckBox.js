@@ -40,10 +40,22 @@ class MultiCheckBox extends Component {
     }
   };
 
+  onClickStyle = clicked => {
+    let style = {};
+    if (clicked && this.props.multi) {
+      style = { backgroundColor: "#99c6f3" };
+    } else if (clicked && !this.props.multi) {
+      style = { borderColor: "#99c6f3" };
+    }
+    console.log("style", style);
+    return style;
+  };
+
   render() {
-    const { values } = this.props;
+    const { values, className } = this.props;
+
     return (
-      <ul className="multickebox">
+      <ul className="inline">
         {values.map(value => {
           const included = this.state.values.includes(value);
           return (
@@ -51,7 +63,8 @@ class MultiCheckBox extends Component {
               <button
                 onClick={this._onClick}
                 value={value}
-                style={{ backgroundColor: included ? "#99c6f3" : "" }}
+                className={className}
+                style={this.onClickStyle(included)}
               >
                 {value}
               </button>
@@ -64,11 +77,15 @@ class MultiCheckBox extends Component {
 }
 
 MultiCheckBox.defaultProps = {
-  values: ["Terror", "Aventura"]
+  values: ["Terror", "Aventura"],
+  className: "checkBtn",
+  multi: false
 };
 
 MultiCheckBox.propTypes = {
-  values: PropTypes.array.isRequired
+  values: PropTypes.array.isRequired,
+  className: PropTypes.string,
+  multi: PropTypes.bool
 };
 
 export default MultiCheckBox;

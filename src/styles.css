@@ -117,7 +117,7 @@ div.movie-info p {
   margin-bottom: 0.5em;
 }
 
-.movies ul {
+.movies > ul {
   flex-direction: column;
 }
 
@@ -182,7 +182,7 @@ label {
   margin-bottom: 0.3em;
 }
 
-.multickebox button {
+.checkBtn {
   width: 100%;
   padding: 0.5em;
   font-size: 16px;
@@ -192,7 +192,7 @@ label {
   box-shadow: 1px 2px 3px #d6d3d3;
 }
 
-.multickebox button:hover {
+.checkBtn:hover {
   border-color: #99c6f3;
   color: 99c6f3;
 }
@@ -218,28 +218,17 @@ button[type="submit"]:active {
   transform: scale(0.9);
 }
 
-/* add animation */
-.fade li {
-  transition: all 0.9s ease-out;
-  opacity: 0;
+.inline {
+  display: flex;
+  flex-direction: row;
 }
 
-.swing {
-  perspective: 10em;
-}
-
-.swing li {
-  opacity: 0;
-  transform: rotateY(-20deg);
-  transition: all 0.5s cubic-bezier(0.36, -0.64, 0.34, 1.76);
-}
-
-/*fade in*/
-.fade li.show {
-  opacity: 1;
-}
-
-.swing li.show {
-  opacity: 1;
-  transform: none;
+.filterLink {
+  width: 100%;
+  padding: 0.1em 0.2em;
+  font-size: 16px;
+  cursor: pointer;
+  border-width: 0;
+  border-bottom: 2px solid #2196f3;
+  background-color: white;
 }
