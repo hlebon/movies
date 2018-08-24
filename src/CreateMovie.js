@@ -41,6 +41,7 @@ class CreateMovie extends React.Component {
         />
         <label>Categories</label>
         <MultiCheckBox
+          values={["Terror", "Aventura"]}
           multi
           onClick={categories =>
             this.setState({

@@ -1,20 +1,14 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import Movie from "./Movie";
-import MultiCheckBox from "./MultiCheckBox";
 
 class Movies extends Component {
   render() {
-    const { movies, displaySearch = false } = this.props;
+    const { movies, title, children } = this.props;
     return (
       <div className="movies">
-        <h2>Movies</h2>
-        {displaySearch && (
-          <input type="text" placeholder="Buscar pelicula..." />
-        )}
-        <div>
-          <MultiCheckBox className="filterLink" />
-        </div>
+        <h2>{title}</h2>
+        {movies.length > 0 && <div>{children}</div>}
         <ul>
           {movies.map(movie => {
             return (
@@ -25,7 +19,7 @@ class Movies extends Component {
                   padding: ".5em"
                 }}
               >
-                <Movie movie={movie} />
+                <Movie movie={movie} onCheck={this.props.onCheck} />
               </li>
             );
           })}
@@ -35,13 +29,10 @@ class Movies extends Component {
   }
 }
 
-Movies.defaultProps = {
-  displaySearch: false
-};
-
 Movies.propTypes = {
   movies: PropTypes.array.isRequired,
-  displaySearch: PropTypes.bool
+  displaySearch: PropTypes.bool,
+  onCheck: PropTypes.func.isRequired
 };
 
 export default Movies;

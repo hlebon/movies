@@ -45,7 +45,7 @@ class MultiCheckBox extends Component {
     if (clicked && this.props.multi) {
       style = { backgroundColor: "#99c6f3" };
     } else if (clicked && !this.props.multi) {
-      style = { borderColor: "#99c6f3" };
+      style = { borderColor: "#99c6f3", outline: "none" };
     }
     console.log("style", style);
     return style;
@@ -77,7 +77,7 @@ class MultiCheckBox extends Component {
 }
 
 MultiCheckBox.defaultProps = {
-  values: ["Terror", "Aventura"],
+  values: [],
   className: "checkBtn",
   multi: false
 };

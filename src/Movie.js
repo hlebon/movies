@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import Checkbox from "./Checkbox";
 
 function Movie({ movie, onCheck }) {
-  console.log("movie", movie);
   const { name, description, genres, status, image } = movie;
   console.log(movie);
   return (
@@ -24,7 +23,9 @@ function Movie({ movie, onCheck }) {
         <Checkbox
           status={status}
           onCheck={value => {
-            console.log(value);
+            if (onCheck) {
+              onCheck(movie);
+            }
           }}
         />
       </div>

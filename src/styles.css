@@ -146,6 +146,7 @@ ul li {
 input[type="text"],
 textarea {
   min-width: 300px;
+  width: 100%;
   min-height: 45px;
   padding: 0.3em 0.7em;
   margin-bottom: 1em;
@@ -164,10 +165,6 @@ textarea:focus {
 div.movies {
   display: flex;
   flex-direction: column;
-}
-
-div.movies input {
-  max-width: 500px;
 }
 
 /* form */
@@ -231,4 +228,33 @@ button[type="submit"]:active {
   border-width: 0;
   border-bottom: 2px solid #2196f3;
   background-color: white;
+}
+
+.main {
+  width: 40%;
+  margin: auto;
+}
+
+@media screen and (max-width: 900px) {
+  .main {
+    width: 60%;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .main {
+    width: 70%;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .main {
+    width: 80%;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .main {
+    width: 100%;
+  }
 }

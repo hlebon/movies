@@ -1,8 +1,8 @@
 import React from "react";
-import Movie from "./Movie";
-import Movies from "./Movies";
-import CreateMovie from "./CreateMovie";
 import ReactDOM from "react-dom";
+import Movies from "./Movies";
+import MultiCheckBox from "./MultiCheckBox";
+import CreateMovie from "./CreateMovie";
 
 import "./styles.css";
 
@@ -11,7 +11,7 @@ const movies = [
     name: "Batman, el caballero de la noche",
     description: "Pelicula basada en el comic de batman",
     genres: ["accion"],
-    status: true,
+    status: false,
     image: "https://i.ebayimg.com/images/g/z54AAOSw7p5ajZmL/s-l300.jpg"
   },
   {
@@ -25,14 +25,15 @@ const movies = [
     name: "Superman, el regreso",
     description: "Pelicula basada en el comic de superman",
     genres: ["accion"],
-    status: true,
+    status: false,
     image: "https://i.ebayimg.com/images/g/z54AAOSw7p5ajZmL/s-l300.jpg"
   }
 ];
 
 class App extends React.Component {
   state = {
-    movies: movies
+    movies: movies,
+    moviesSeen: []
   };
 
   _onSubmit = movie => {
@@ -49,14 +50,72 @@ class App extends React.Component {
     });
   };
 
+  _addToSeen = movie => {
+    this.setState(currentApp => ({
+      movies: currentApp.movies.filter(m => m.name !== movie.name),
+      moviesSeen: [
+        ...currentApp.moviesSeen,
+        ...currentApp.movies.reduce((acc, current) => {
+          if (current.name === movie.name) {
+            acc.push({
+              ...current,
+              status: true
+            });
+          }
+          return acc;
+        }, [])
+      ]
+    }));
+  };
+
+  _removeFromSeen = movie => {
+    this.setState(currentApp => ({
+      moviesSeen: currentApp.moviesSeen.filter(m => m.name !== movie.name),
+      movies: [
+        ...currentApp.movies,
+        ...currentApp.moviesSeen.reduce((acc, current) => {
+          if (current.name === movie.name) {
+            acc.push({
+              ...current,
+              status: false
+            });
+          }
+          return acc;
+        }, [])
+      ]
+    }));
+  };
+
   render() {
+    console.log("movieSeen", this.state.moviesSeen);
     return (
       <div className="App">
         <h1>Hello CodeSandbox</h1>
-        <div style={{ width: "40%", margin: "auto" }}>
+        <div className="main">
           <CreateMovie onSubmit={this._onSubmit} />
           <br />
-          <Movies movies={this.state.movies} />
+          <Movies
+            title="Seen"
+            movies={this.state.moviesSeen}
+            onCheck={this._removeFromSeen}
+          >
+            <MultiCheckBox
+              values={["Seen", "Unseen", "All"]}
+              className="filterLink"
+            />
+          </Movies>
+          <br />
+          <Movies
+            title="Movies"
+            movies={this.state.movies}
+            onCheck={this._addToSeen}
+          >
+            <MultiCheckBox
+              values={["Unseen", "Seen", "All"]}
+              className="filterLink"
+            />
+            <input type="text" />
+          </Movies>
         </div>
       </div>
     );
