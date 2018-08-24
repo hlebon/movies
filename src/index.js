@@ -50,6 +50,17 @@ class App extends React.Component {
     });
   };
 
+  _addToSeen1 = movie => {
+    const { movies } = this.state;
+    const position = this.state.movies.indexOf(movie);
+    if (position >= 0) {
+      movies.splice(position, 1, { ...movie, status: true });
+      this.setState({
+        movies: movies
+      });
+    }
+  };
+
   _addToSeen = movie => {
     this.setState(currentApp => ({
       movies: currentApp.movies.filter(m => m.name !== movie.name),
@@ -108,7 +119,7 @@ class App extends React.Component {
           <Movies
             title="Movies"
             movies={this.state.movies}
-            onCheck={this._addToSeen}
+            onCheck={this._addToSeen1}
           >
             <MultiCheckBox
               values={["Unseen", "Seen", "All"]}
