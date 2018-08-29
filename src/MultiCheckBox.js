@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 class MultiCheckBox extends Component {
   state = {
-    values: []
+    values: this.props.activeValues
   };
 
   _onClick = e => {
@@ -14,6 +14,30 @@ class MultiCheckBox extends Component {
   };
 
   handleValues = value => {
+    if (this.props.multi) {
+      this.handleMultiValues(value);
+    } else {
+      this.handleSingleValue(value);
+    }
+  };
+
+  handleSingleValue = value => {
+    const { values } = this.state;
+    if (!values.includes(value)) {
+      this.setState(
+        {
+          values: value
+        },
+        () => {
+          if (this.props.onClick) {
+            this.props.onClick(this.state.values);
+          }
+        }
+      );
+    }
+  };
+
+  handleMultiValues = value => {
     const { values } = this.state;
     if (values.includes(value)) {
       this.setState(
@@ -40,14 +64,13 @@ class MultiCheckBox extends Component {
     }
   };
 
-  onClickStyle = clicked => {
+  activeBtnStyle = clicked => {
     let style = {};
     if (clicked && this.props.multi) {
       style = { backgroundColor: "#99c6f3" };
     } else if (clicked && !this.props.multi) {
-      style = { borderColor: "#99c6f3", outline: "none" };
+      style = { borderColor: "#8bc34a", outline: "none" };
     }
-    console.log("style", style);
     return style;
   };
 
@@ -64,7 +87,7 @@ class MultiCheckBox extends Component {
                 onClick={this._onClick}
                 value={value}
                 className={className}
-                style={this.onClickStyle(included)}
+                style={this.activeBtnStyle(included)}
               >
                 {value}
               </button>
@@ -79,13 +102,15 @@ class MultiCheckBox extends Component {
 MultiCheckBox.defaultProps = {
   values: [],
   className: "checkBtn",
-  multi: false
+  multi: false,
+  activeValues: []
 };
 
 MultiCheckBox.propTypes = {
   values: PropTypes.array.isRequired,
   className: PropTypes.string,
-  multi: PropTypes.bool
+  multi: PropTypes.bool,
+  activeValues: PropTypes.array
 };
 
 export default MultiCheckBox;

@@ -8,18 +8,22 @@ class Movies extends Component {
     return (
       <div className="movies">
         <h2>{title}</h2>
-        {movies.length > 0 && <div>{children}</div>}
+        <div>{children}</div>
         <ul>
           {movies.map(movie => {
             return (
               <li
                 key={movie.name}
                 style={{
-                  border: "1px solid gray",
+                  border: "1px solid #d6d6d6",
                   padding: ".5em"
                 }}
               >
-                <Movie movie={movie} onCheck={this.props.onCheck} />
+                <Movie
+                  movie={movie}
+                  onCheck={this.props.onCheck}
+                  onDelete={this.props.onDelete}
+                />
               </li>
             );
           })}
@@ -32,7 +36,8 @@ class Movies extends Component {
 Movies.propTypes = {
   movies: PropTypes.array.isRequired,
   displaySearch: PropTypes.bool,
-  onCheck: PropTypes.func.isRequired
+  onCheck: PropTypes.func.isRequired,
+  onDelete: PropTypes.func.isRequired
 };
 
 export default Movies;

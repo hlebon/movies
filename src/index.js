@@ -10,7 +10,7 @@ const movies = [
   {
     name: "Batman, el caballero de la noche",
     description: "Pelicula basada en el comic de batman",
-    genres: ["accion"],
+    genres: ["accion", "aventura"],
     status: false,
     image: "https://i.ebayimg.com/images/g/z54AAOSw7p5ajZmL/s-l300.jpg"
   },
@@ -33,7 +33,8 @@ const movies = [
 class App extends React.Component {
   state = {
     movies: movies,
-    moviesSeen: []
+    filter: "All",
+    searchText: ""
   };
 
   _onSubmit = movie => {
@@ -50,7 +51,15 @@ class App extends React.Component {
     });
   };
 
-  _addToSeen1 = movie => {
+  _onDelete = movie => {
+    this.setState(currentState => {
+      return {
+        movies: currentState.movies.filter(m => m.name !== movie.name)
+      };
+    });
+  };
+
+  _onToggle = movie => {
     const { movies } = this.state;
     const position = this.state.movies.indexOf(movie);
     if (position >= 0) {
@@ -61,71 +70,63 @@ class App extends React.Component {
     }
   };
 
-  _addToSeen = movie => {
-    this.setState(currentApp => ({
-      movies: currentApp.movies.filter(m => m.name !== movie.name),
-      moviesSeen: [
-        ...currentApp.moviesSeen,
-        ...currentApp.movies.reduce((acc, current) => {
-          if (current.name === movie.name) {
-            acc.push({
-              ...current,
-              status: true
-            });
-          }
-          return acc;
-        }, [])
-      ]
-    }));
+  _onFilterList = filter => {
+    this.setState({
+      filter
+    });
   };
 
-  _removeFromSeen = movie => {
-    this.setState(currentApp => ({
-      moviesSeen: currentApp.moviesSeen.filter(m => m.name !== movie.name),
-      movies: [
-        ...currentApp.movies,
-        ...currentApp.moviesSeen.reduce((acc, current) => {
-          if (current.name === movie.name) {
-            acc.push({
-              ...current,
-              status: false
-            });
-          }
-          return acc;
-        }, [])
-      ]
-    }));
+  _onChange = e => {
+    const { name, value } = e.target;
+    this.setState({
+      [name]: value
+    });
+  };
+
+  handleFilteredMovies = ({ filter, movies }) => {
+    switch (filter.trim()) {
+      case "Unseen":
+        return movies.filter(m => !m.status);
+      case "Seen":
+        return movies.filter(m => m.status);
+      default:
+        return movies;
+    }
   };
 
   render() {
-    console.log("movieSeen", this.state.moviesSeen);
+    const movies = this.handleFilteredMovies(this.state).filter(v => {
+      return v.name
+        .trim()
+        .toLowerCase()
+        .includes(this.state.searchText.toLowerCase().trim());
+    });
     return (
       <div className="App">
-        <h1>Hello CodeSandbox</h1>
+        <h1>My Movies</h1>
         <div className="main">
           <CreateMovie onSubmit={this._onSubmit} />
           <br />
-          <Movies
-            title="Seen"
-            movies={this.state.moviesSeen}
-            onCheck={this._removeFromSeen}
-          >
-            <MultiCheckBox
-              values={["Seen", "Unseen", "All"]}
-              className="filterLink"
-            />
-          </Movies>
-          <br />
+
           <Movies
             title="Movies"
-            movies={this.state.movies}
-            onCheck={this._addToSeen1}
+            movies={movies}
+            onCheck={this._onToggle}
+            onDelete={this._onDelete}
           >
             <MultiCheckBox
+              onClick={this._onFilterList}
               values={["Unseen", "Seen", "All"]}
+              activeValues={[this.state.filter]}
               className="filterLink"
             />
-            <input type="text" />
+            <input
+              type="text"
+              placeholder="Search..."
+              name="searchText"
+              value={this.state.searchText}
+              onChange={this._onChange}
+            />
           </Movies>
         </div>
       </div>
